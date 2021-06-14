@@ -5,9 +5,6 @@ import './DishdetailComponent.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class DishDetail extends Component {
-    constructor(props) {
-        super(props);
-    }
     
     renderDish(dish) {
         if (dish != null)
@@ -25,13 +22,14 @@ class DishDetail extends Component {
                 <div></div>
             );
     };
-    renderComment(dish){
+
+     renderComment(dish){
         if(dish){
         const dishReturn = dish.comments.map((singleComment) => {
             return(
                 <li key={singleComment.id} >
                 <p>{singleComment.comment}</p>
-                <p>-- {singleComment.author} , {singleComment.date}</p>
+                <p>-- {singleComment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(singleComment.date)))}</p>
                 </li>
             );
         });
@@ -50,17 +48,19 @@ class DishDetail extends Component {
         
         
         return(
+            <div className="container">
             <div className="row">
                   <div  className="col-12 col-md-5 m-1">
-                    {this.renderDish(this.props.Dish)}
+                    {this.renderDish(this.props.dish)}
                   </div>
                     <div  className="col-12 col-md-5 m-1">
                         <h4 className="commentheading">Comments</h4>
                         <ul className="list-unstyled">
-                        {this.renderComment(this.props.Dish)}
+                        {this.renderComment(this.props.dish)}
                         </ul>
                       </div>
                 </div>
+            </div>
         );
     };
 
