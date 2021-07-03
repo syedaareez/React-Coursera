@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import './DishdetailComponent.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Loading } from './LoadingComponent';
 
 function RenderDish({dish}) {
     
@@ -143,6 +144,25 @@ class CommentForm extends Component {
     
 
     const  DishDetail = (props) => {
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dish != null){
 
       return(
             <div className="container">
@@ -172,7 +192,7 @@ class CommentForm extends Component {
                     </div>
                 </div>
                 </div>
-        );
+        );}
     }
 
     
