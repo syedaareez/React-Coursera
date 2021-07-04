@@ -5,19 +5,26 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import './DishdetailComponent.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Loading } from './LoadingComponent';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 import { baseUrl } from '../shared/baseUrl';
 
 function RenderDish({dish}) {
     
      if (dish != null)
             return(
-                <Card>
-                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-                    <CardBody>
-                      <CardTitle>{dish.name}</CardTitle>
-                      <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card> 
+               <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+            <Card>
+                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+            </FadeTransform>
             );
         else
             return(
@@ -31,15 +38,19 @@ function RenderComments({comments, postComment, dishId}) {
       if(comments){
         const commentReturn = comments.map((singleComment) => {
             return(
+                <Fade in>
                 <li key={singleComment.id} >
                 <p>{singleComment.comment}</p>
                 <p>-- {singleComment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(singleComment.date)))}</p>
                 </li>
+                </Fade>
             );
         });
         return (
             <div>
+            <Stagger in>
             {commentReturn}
+            </Stagger>
             <CommentForm dishId={dishId} postComment={postComment} />
             </div>
             
